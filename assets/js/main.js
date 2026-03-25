@@ -207,6 +207,19 @@ window.addEventListener('DOMContentLoaded', function() {
       grid.appendChild(clonedCard);
     }
 
+    const removeProject2For = new Set(['project-3d-modeling', 'project-landscape-design']);
+    if (removeProject2For.has(subsection.id)) {
+      const unwantedTitle = subsectionTitle + ' Project 2';
+      const unwantedCard = Array.from(grid.querySelectorAll('.project__card')).find((card) => {
+        const title = card.querySelector('.project__card-title')?.textContent?.trim();
+        return title === unwantedTitle;
+      });
+
+      if (unwantedCard) {
+        unwantedCard.remove();
+      }
+    }
+
     const cards = Array.from(grid.querySelectorAll('.project__card'));
     const visibleCount = 3;
     if (cards.length > visibleCount) {
