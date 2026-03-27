@@ -1343,6 +1343,11 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
     justify-content: center;
   }
 
+  .service__wrapper > .service__card:last-child:nth-child(2n + 1) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
   .qualification__content {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1412,6 +1417,11 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   .service__wrapper,
   .project__wrapper {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .service__wrapper > .service__card:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+    justify-self: center;
   }
 
   .contact__wrapper {
