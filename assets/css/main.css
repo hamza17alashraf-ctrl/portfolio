@@ -861,6 +861,27 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   transform: scale(1.1);
 }
 
+.project__card-video[data-hover-play] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project__card-thumbnail {
+  display: block;
+}
+
+.project__card:hover .project__card-video[data-hover-play],
+.project__card:focus-within .project__card-video[data-hover-play] {
+  opacity: 1;
+}
+
+.project__card:hover .project__card-thumbnail,
+.project__card:focus-within .project__card-thumbnail {
+  opacity: 0;
+}
+
 .project__card-meta {
   display: flex;
   align-items: center;
