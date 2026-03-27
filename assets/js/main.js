@@ -95,14 +95,6 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             const media = entry.target;
-            if (media.tagName === 'IMG') {
-              const dataSrc = media.dataset.src;
-              if (dataSrc && !media.getAttribute('src')) {
-                media.setAttribute('src', dataSrc);
-              }
-              media.removeAttribute('data-src');
-            }
-
             if (media.tagName === 'VIDEO') {
               const sources = media.querySelectorAll('source[data-src]');
               if (sources.length) {
@@ -129,14 +121,6 @@ window.addEventListener('DOMContentLoaded', function() {
       }
 
       if (!lazyMediaObserver) {
-        if (mediaEl.tagName === 'IMG') {
-          const dataSrc = mediaEl.dataset.src;
-          if (dataSrc && !mediaEl.getAttribute('src')) {
-            mediaEl.setAttribute('src', dataSrc);
-          }
-          mediaEl.removeAttribute('data-src');
-        }
-
         if (mediaEl.tagName === 'VIDEO') {
           const sources = mediaEl.querySelectorAll('source[data-src]');
           if (sources.length) {
@@ -187,16 +171,6 @@ window.addEventListener('DOMContentLoaded', function() {
         imageEl.loading = 'lazy';
         imageEl.decoding = 'async';
         imageEl.fetchPriority = 'low';
-
-        if (!imageEl.dataset.src) {
-          const currentSrc = imageEl.getAttribute('src');
-          if (currentSrc) {
-            imageEl.dataset.src = currentSrc;
-            imageEl.removeAttribute('src');
-          }
-        }
-
-        observeProjectMedia(imageEl);
       });
 
       const cardVideos = scope.querySelectorAll('.project__card video[data-hover-play]');
@@ -311,8 +285,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
       if (imageEl) {
         imageEl.classList.remove('project__card-thumbnail', 'project__card-video');
-        imageEl.dataset.src = randomProject.image;
-        imageEl.removeAttribute('src');
+        imageEl.src = randomProject.image;
         imageEl.alt = randomProject.title;
         imageEl.loading = 'lazy';
         imageEl.decoding = 'async';
@@ -329,6 +302,35 @@ window.addEventListener('DOMContentLoaded', function() {
       }
 
       grid.appendChild(clonedCard);
+    }
+
+    if (subsection.id === 'project-architectural-design') {
+      const creativeVillaTitle = 'The Creative Villa: Harmony of Art and Family Life';
+      const sectionCards = Array.from(grid.querySelectorAll('.project__card'));
+
+      sectionCards.forEach((card) => {
+        const title = card.querySelector('.project__card-title')?.textContent?.trim();
+        const imageEl = card.querySelector('img.project__card-img');
+        const videoEl = card.querySelector('video[data-hover-play]');
+        const isCreativeVillaCard = title === creativeVillaTitle;
+
+        if (isCreativeVillaCard) {
+          if (imageEl) {
+            imageEl.classList.add('project__card-thumbnail');
+          }
+          if (videoEl) {
+            videoEl.classList.add('project__card-video');
+          }
+          return;
+        }
+
+        if (videoEl) {
+          videoEl.remove();
+        }
+        if (imageEl) {
+          imageEl.classList.remove('project__card-thumbnail', 'project__card-video');
+        }
+      });
     }
 
     const removeProject2For = new Set(['project-3d-modeling', 'project-landscape-design']);
