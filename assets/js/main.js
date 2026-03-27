@@ -70,6 +70,52 @@ if (homeLink) {
 window.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.getElementById('contact-form');
   const contactSuccess = document.getElementById('contact-success');
+  const serviceCards = document.querySelectorAll('.service__card');
+
+  serviceCards.forEach((card) => {
+    const cardLink = card.querySelector('.service__link');
+    if (!cardLink) {
+      return;
+    }
+
+    const href = cardLink.getAttribute('href');
+    if (!href) {
+      return;
+    }
+
+    card.setAttribute('role', 'link');
+    card.setAttribute('tabindex', '0');
+
+    const navigateToTarget = () => {
+      if (!href.startsWith('#')) {
+        window.location.href = href;
+        return;
+      }
+
+      const targetEl = document.querySelector(href);
+      if (!targetEl) {
+        return;
+      }
+
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        return;
+      }
+      navigateToTarget();
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+      event.preventDefault();
+      navigateToTarget();
+    });
+  });
+
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -183,278 +229,297 @@ window.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-  const projectSubsections = document.querySelectorAll('.project__subsection');
-  const projectPool = [
-    {
-      image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=80',
-      title: 'Concept Development',
-      description: 'Early concept studies focused on massing, natural light, and spatial relationships.',
-      date: 'April 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1464146072230-91cabc968266?auto=format&fit=crop&w=900&q=80',
-      title: 'Facade Exploration',
-      description: 'Material and facade exploration balancing identity, performance, and aesthetics.',
-      date: 'May 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80',
-      title: 'Urban Proposal',
-      description: 'A site-responsive proposal integrating circulation, landscape, and public activity.',
-      date: 'June 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80',
-      title: 'Detailed Study',
-      description: 'Refined technical study for structure, envelope, and interior atmosphere.',
-      date: 'July 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1465808028273-23916f3f7a4f?auto=format&fit=crop&w=900&q=80',
-      title: 'Presentation Board',
-      description: 'Visual storytelling package for client presentation and design communication.',
-      date: 'August 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=900&q=80',
-      title: 'Construction Phase',
-      description: 'Execution-focused drawings and coordinated details for build-ready delivery.',
-      date: 'September 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
-      title: 'Interior Concept',
-      description: 'Interior mood and material strategy with comfort-driven space planning.',
-      date: 'October 2024'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80',
-      title: 'Landscape Vision',
-      description: 'Outdoor environment design combining planting, pathways, and gathering zones.',
-      date: 'November 2024'
-    }
-  ];
+    const videoExistenceCache = new Map();
 
-  function pickRandomProject() {
-    return projectPool[Math.floor(Math.random() * projectPool.length)];
-  }
+    function getCandidateVideoPathFromImage(imagePath) {
+      if (!imagePath || !/^assets\/projects\//i.test(imagePath)) {
+        return null;
+      }
 
-  projectSubsections.forEach((subsection) => {
-    const grid = subsection.querySelector('.project__grid');
-    const baseCard = grid ? grid.querySelector('.project__card') : null;
+      if (!/\.jpg$/i.test(imagePath)) {
+        return null;
+      }
 
-    if (!grid || !baseCard) {
-      return;
+      return imagePath.replace(/\.jpg$/i, '.mp4');
     }
 
-    const subsectionTitle = subsection.querySelector('.project__subsection-title')?.textContent?.trim() || 'Project';
-    const isRealisticRenderings = subsection.id === 'project-realistic-renderings';
-    const targetCount = isRealisticRenderings ? 2 : 6 + Math.floor(Math.random() * 2);
-
-    while (grid.querySelectorAll('.project__card').length < targetCount) {
-      const randomProject = pickRandomProject();
-      const clonedCard = baseCard.cloneNode(true);
-      const cardIndex = grid.querySelectorAll('.project__card').length + 1;
-      const clonedHoverVideo = clonedCard.querySelector('video[data-hover-play]');
-
-      let imageEl = clonedCard.querySelector('.project__card-img');
-      const titleEl = clonedCard.querySelector('.project__card-title');
-      const descriptionEl = clonedCard.querySelector('.project__card-description');
-      const linkEl = clonedCard.querySelector('.project__card-link');
-
-      if (clonedHoverVideo) {
-        clonedHoverVideo.remove();
+    async function checkVideoExists(videoPath) {
+      if (videoExistenceCache.has(videoPath)) {
+        return videoExistenceCache.get(videoPath);
       }
 
-      if (imageEl && imageEl.tagName === 'VIDEO') {
-        const replacementImg = document.createElement('img');
-        replacementImg.className = 'project__card-img';
-        imageEl.replaceWith(replacementImg);
-        imageEl = replacementImg;
+      let exists = false;
+      try {
+        const response = await fetch(videoPath, { method: 'HEAD' });
+        exists = response.ok;
+      } catch (error) {
+        exists = false;
       }
 
-      if (imageEl) {
-        imageEl.classList.remove('project__card-thumbnail', 'project__card-video');
-        imageEl.src = randomProject.image;
-        imageEl.alt = randomProject.title;
-        imageEl.loading = 'lazy';
-        imageEl.decoding = 'async';
-        imageEl.fetchPriority = 'low';
-      }
-      if (titleEl) {
-        titleEl.textContent = subsectionTitle + ' Project ' + cardIndex;
-      }
-      if (descriptionEl) {
-        descriptionEl.textContent = randomProject.description;
-      }
-      if (linkEl) {
-        linkEl.href = '#';
-      }
-
-      grid.appendChild(clonedCard);
+      videoExistenceCache.set(videoPath, exists);
+      return exists;
     }
 
-    if (subsection.id === 'project-architectural-design') {
-      const creativeVillaTitle = 'The Creative Villa: Harmony of Art and Family Life';
-      const sectionCards = Array.from(grid.querySelectorAll('.project__card'));
+    async function attachAutoHoverVideos(scope = document) {
+      const cards = Array.from(scope.querySelectorAll('.project__card'));
 
-      sectionCards.forEach((card) => {
-        const title = card.querySelector('.project__card-title')?.textContent?.trim();
-        const imageEl = card.querySelector('img.project__card-img');
-        const videoEl = card.querySelector('video[data-hover-play]');
-        const isCreativeVillaCard = title === creativeVillaTitle;
+      for (const card of cards) {
+        if (card.dataset.autoVideoChecked === 'true') {
+          continue;
+        }
 
-        if (isCreativeVillaCard) {
-          if (imageEl) {
-            imageEl.classList.add('project__card-thumbnail');
-          }
-          if (videoEl) {
-            videoEl.classList.add('project__card-video');
-          }
+        if (card.dataset.disableVideo === 'true') {
+          card.dataset.autoVideoChecked = 'true';
+          continue;
+        }
+
+        card.dataset.autoVideoChecked = 'true';
+
+        const wrapper = card.querySelector('.project__image-wrapper');
+        if (!wrapper) {
+          continue;
+        }
+
+        const imageEl = wrapper.querySelector('img.project__card-img');
+        const existingVideo = wrapper.querySelector('video[data-hover-play]');
+        if (!imageEl || existingVideo) {
+          continue;
+        }
+
+        const imagePath = imageEl.getAttribute('src') || '';
+        const candidateVideoPath = getCandidateVideoPathFromImage(imagePath);
+        if (!candidateVideoPath) {
+          continue;
+        }
+
+        const hasVideo = await checkVideoExists(candidateVideoPath);
+        if (!hasVideo) {
+          continue;
+        }
+
+        imageEl.classList.add('project__card-thumbnail');
+
+        const videoEl = document.createElement('video');
+        videoEl.className = 'project__card-img project__card-video';
+        videoEl.setAttribute('muted', '');
+        videoEl.setAttribute('playsinline', '');
+        videoEl.setAttribute('preload', 'metadata');
+        videoEl.setAttribute('data-hover-play', '');
+
+        const sourceEl = document.createElement('source');
+        sourceEl.setAttribute('src', candidateVideoPath);
+        sourceEl.setAttribute('type', 'video/mp4');
+        videoEl.appendChild(sourceEl);
+
+        wrapper.appendChild(videoEl);
+      }
+    }
+
+    function initProjectShowMore(scope = document) {
+      const visibleCount = 3;
+      const subsections = scope.classList && scope.classList.contains('project__subsection')
+        ? [scope]
+        : Array.from(scope.querySelectorAll('.project__subsection'));
+
+      subsections.forEach((subsection) => {
+        if (subsection.dataset.showMoreReady === 'true') {
           return;
         }
 
-        if (videoEl) {
-          videoEl.remove();
+        const cards = Array.from(subsection.querySelectorAll('.project__grid .project__card'));
+        if (cards.length <= visibleCount) {
+          subsection.dataset.showMoreReady = 'true';
+          return;
         }
-        if (imageEl) {
-          imageEl.classList.remove('project__card-thumbnail', 'project__card-video');
-        }
-      });
-    }
-
-    const removeProject2For = new Set(['project-3d-modeling', 'project-landscape-design']);
-    if (removeProject2For.has(subsection.id)) {
-      const unwantedTitle = subsectionTitle + ' Project 2';
-      const unwantedCard = Array.from(grid.querySelectorAll('.project__card')).find((card) => {
-        const title = card.querySelector('.project__card-title')?.textContent?.trim();
-        return title === unwantedTitle;
-      });
-
-      if (unwantedCard) {
-        unwantedCard.remove();
-      }
-    }
-
-    const cards = Array.from(grid.querySelectorAll('.project__card'));
-    const visibleCount = 3;
-    if (cards.length > visibleCount) {
-      cards.forEach((card, idx) => {
-        if (idx >= visibleCount) {
-          card.classList.add('project__card--hidden');
-        }
-      });
-
-      let showMoreButton = subsection.querySelector('.project__show-more');
-      if (!showMoreButton) {
-        showMoreButton = document.createElement('button');
-        showMoreButton.type = 'button';
-        showMoreButton.className = 'project__show-more';
-        showMoreButton.textContent = 'Show more >';
-        subsection.appendChild(showMoreButton);
-      }
-
-      let isExpanded = false;
-      showMoreButton.addEventListener('click', function() {
-        isExpanded = !isExpanded;
 
         cards.forEach((card, idx) => {
-          const shouldHide = !isExpanded && idx >= visibleCount;
-          card.classList.toggle('project__card--hidden', shouldHide);
+          card.classList.toggle('project__card--hidden', idx >= visibleCount);
         });
 
-        showMoreButton.textContent = isExpanded ? 'Show less <' : 'Show more >';
+        let showMoreButton = subsection.querySelector('.project__show-more');
+        if (!showMoreButton) {
+          showMoreButton = document.createElement('button');
+          showMoreButton.type = 'button';
+          showMoreButton.className = 'project__show-more';
+          showMoreButton.textContent = 'Show more >';
+          subsection.appendChild(showMoreButton);
+        }
+
+        let isExpanded = false;
+        showMoreButton.addEventListener('click', () => {
+          isExpanded = !isExpanded;
+          cards.forEach((card, idx) => {
+            card.classList.toggle('project__card--hidden', !isExpanded && idx >= visibleCount);
+          });
+          showMoreButton.textContent = isExpanded ? 'Show less <' : 'Show more >';
+        });
+
+        subsection.dataset.showMoreReady = 'true';
       });
     }
-  });
 
-  prepareProjectCardMedia();
+    function initProjectVideoHover(scope = document) {
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const scopedVideos = Array.from(scope.querySelectorAll('.project__card video[data-hover-play]'));
 
-  const hoverVideos = document.querySelectorAll('.project__card video[data-hover-play]');
-  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const disableBrokenVideo = (video, card) => {
+        const thumbnail = card.querySelector('img.project__card-thumbnail');
+        if (thumbnail) {
+          thumbnail.classList.remove('project__card-thumbnail');
+        }
+        card.classList.remove('is-video-active');
+        video.remove();
+      };
 
-  function stopVideo(video, card) {
-    video.pause();
-    video.currentTime = 0;
-    card.classList.remove('is-video-active');
-  }
+      const stopVideo = (video, card) => {
+        video.pause();
+        video.currentTime = 0;
+        card.classList.remove('is-video-active');
+      };
 
-  function stopOtherVideos(activeVideo) {
-    hoverVideos.forEach((videoEl) => {
-      if (videoEl === activeVideo) {
-        return;
-      }
+      const stopOtherVideos = (activeVideo) => {
+        document.querySelectorAll('.project__card video[data-hover-play]').forEach((videoEl) => {
+          if (videoEl === activeVideo) {
+            return;
+          }
 
-      const otherCard = videoEl.closest('.project__card');
-      if (!otherCard) {
-        return;
-      }
+          const otherCard = videoEl.closest('.project__card');
+          if (!otherCard) {
+            return;
+          }
 
-      stopVideo(videoEl, otherCard);
-    });
-  }
+          stopVideo(videoEl, otherCard);
+        });
+      };
 
-  hoverVideos.forEach((video) => {
-    video.muted = true;
+      scopedVideos.forEach((video) => {
+        if (video.dataset.hoverReady === 'true') {
+          return;
+        }
 
-    const card = video.closest('.project__card');
-    if (!card) {
-      return;
+        video.muted = true;
+
+        const card = video.closest('.project__card');
+        if (!card) {
+          return;
+        }
+
+        video.addEventListener('error', () => {
+          disableBrokenVideo(video, card);
+        }, { once: true });
+
+        const videoSource = video.querySelector('source');
+        if (videoSource) {
+          videoSource.addEventListener('error', () => {
+            disableBrokenVideo(video, card);
+          }, { once: true });
+        }
+
+        const startVideo = () => {
+          stopOtherVideos(video);
+          ensureVideoLoaded(video);
+          video.currentTime = 0;
+          card.classList.add('is-video-active');
+
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {
+              video.addEventListener('canplay', () => {
+                video.play().catch(() => {});
+              }, { once: true });
+            });
+          }
+        };
+
+        if (canHover) {
+          card.addEventListener('mouseenter', () => {
+            startVideo();
+          });
+
+          card.addEventListener('mouseleave', () => {
+            stopVideo(video, card);
+          });
+        } else {
+          const handleTapStart = (event) => {
+            if (event.target.closest('a, button')) {
+              return;
+            }
+
+            event.preventDefault();
+
+            if (card.classList.contains('is-video-active') && !video.paused) {
+              stopVideo(video, card);
+              return;
+            }
+
+            startVideo();
+          };
+
+          let pointerHandled = false;
+
+          card.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse') {
+              return;
+            }
+
+            pointerHandled = true;
+            handleTapStart(event);
+          });
+
+          card.addEventListener('click', (event) => {
+            if (pointerHandled) {
+              pointerHandled = false;
+              return;
+            }
+
+            handleTapStart(event);
+          });
+        }
+
+        video.dataset.hoverReady = 'true';
+      });
     }
 
-    const startVideo = () => {
-      stopOtherVideos(video);
-      ensureVideoLoaded(video);
-      video.currentTime = 0;
-      card.classList.add('is-video-active');
-      video.play().catch(() => {});
-    };
+    const projectSubsections = document.querySelectorAll('.project__subsection');
+    const subsectionObserver = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
 
-    if (canHover) {
-      card.addEventListener('mouseenter', () => {
-        startVideo();
-      });
+            const subsection = entry.target;
+            subsection.classList.remove('project__subsection--deferred');
+            subsection.classList.add('project__subsection--active');
 
-      card.addEventListener('mouseleave', () => {
-        stopVideo(video, card);
-      });
+            attachAutoHoverVideos(subsection)
+              .finally(() => {
+                prepareProjectCardMedia(subsection);
+                initProjectShowMore(subsection);
+                initProjectVideoHover(subsection);
+              });
 
-      return;
-    }
+            observer.unobserve(subsection);
+          });
+        }, {
+          rootMargin: '240px 0px',
+          threshold: 0.05,
+        })
+      : null;
 
-    const handleTapStart = (event) => {
-      if (event.target.closest('a, button')) {
-        return;
+    projectSubsections.forEach((subsection) => {
+      subsection.classList.add('project__subsection--deferred');
+      if (subsectionObserver) {
+        subsectionObserver.observe(subsection);
+      } else {
+        subsection.classList.remove('project__subsection--deferred');
+        subsection.classList.add('project__subsection--active');
+        attachAutoHoverVideos(subsection)
+          .finally(() => {
+            prepareProjectCardMedia(subsection);
+            initProjectShowMore(subsection);
+            initProjectVideoHover(subsection);
+          });
       }
-
-      event.preventDefault();
-
-      if (card.classList.contains('is-video-active') && !video.paused) {
-        stopVideo(video, card);
-        return;
-      }
-
-      startVideo();
-    };
-
-    let pointerHandled = false;
-
-    card.addEventListener('pointerdown', (event) => {
-      if (event.pointerType === 'mouse') {
-        return;
-      }
-
-      pointerHandled = true;
-      handleTapStart(event);
     });
-
-    card.addEventListener('click', (event) => {
-      if (pointerHandled) {
-        pointerHandled = false;
-        return;
-      }
-
-      handleTapStart(event);
-    });
-  });
 });

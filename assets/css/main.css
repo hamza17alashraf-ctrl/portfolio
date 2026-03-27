@@ -763,7 +763,13 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   width: 100%;
   max-width: 20rem;
   justify-self: center;
+  cursor: pointer;
   transition: var(--transition);
+}
+
+.service__card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 .service__card:hover {
@@ -795,6 +801,19 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 .project__subsection {
   scroll-margin-top: 11rem;
+}
+
+.project__subsection--deferred {
+  opacity: 0;
+  transform: translateY(2rem);
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
+}
+
+.project__subsection--active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .project__subsection-title {
@@ -919,6 +938,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   flex-grow: 1;
   min-height: 3rem;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
