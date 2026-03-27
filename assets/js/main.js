@@ -433,7 +433,7 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    card.addEventListener('click', (event) => {
+    const handleTapStart = (event) => {
       if (event.target.closest('a, button')) {
         return;
       }
@@ -446,6 +446,26 @@ window.addEventListener('DOMContentLoaded', function() {
       }
 
       startVideo();
+    };
+
+    let pointerHandled = false;
+
+    card.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'mouse') {
+        return;
+      }
+
+      pointerHandled = true;
+      handleTapStart(event);
+    });
+
+    card.addEventListener('click', (event) => {
+      if (pointerHandled) {
+        pointerHandled = false;
+        return;
+      }
+
+      handleTapStart(event);
     });
   });
 });
