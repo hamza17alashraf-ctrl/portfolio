@@ -249,13 +249,13 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
     justify-items: center;
     justify-content: center;
     align-items: center;
+    row-gap: 4rem;
+  }
 
   .project__card {
     width: 100%;
     max-width: 28rem;
     justify-self: center;
-  }
-    row-gap: 4rem;
   }
 
   .nav__menu {
