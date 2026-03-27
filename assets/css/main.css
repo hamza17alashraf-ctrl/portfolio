@@ -995,6 +995,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   .service__wrapper {
     grid-template-columns: 1fr;
     gap: 1.6rem;
+    justify-items: center;
   }
 
   .service__card {
@@ -1005,6 +1006,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   .project__grid {
     grid-template-columns: 1fr;
     gap: 1.6rem;
+    justify-items: center;
   }
 
   .project__sections {
@@ -1015,6 +1017,12 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   .project__subsection-title {
     font-size: 2rem;
     margin-bottom: 1.4rem;
+    text-align: center;
+  }
+
+  .project__subsection-title::after {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .project__card {
@@ -1054,6 +1062,12 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   
   .project__card-meta {
     padding-top: 1rem;
+  }
+
+  .project__show-more {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
