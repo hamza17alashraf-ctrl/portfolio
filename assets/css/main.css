@@ -1004,10 +1004,10 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   }
 
   .project__grid {
-    grid-template-columns: minmax(0, 34rem);
-    gap: 1.6rem;
-    justify-content: center;
-    justify-items: stretch;
+    grid-template-columns: 1fr;
+    max-width: 45rem;
+    margin-inline: auto;
+    gap: 2rem;
   }
 
   .project__sections {
