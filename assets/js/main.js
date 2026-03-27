@@ -507,11 +507,8 @@ window.addEventListener('DOMContentLoaded', function() {
         })
       : null;
 
-    projectSubsections.forEach((subsection) => {
-      subsection.classList.add('project__subsection--deferred');
-      if (subsectionObserver) {
-        subsectionObserver.observe(subsection);
-      } else {
+    projectSubsections.forEach((subsection, index) => {
+      const activateSubsection = () => {
         subsection.classList.remove('project__subsection--deferred');
         subsection.classList.add('project__subsection--active');
         attachAutoHoverVideos(subsection)
@@ -520,6 +517,19 @@ window.addEventListener('DOMContentLoaded', function() {
             initProjectShowMore(subsection);
             initProjectVideoHover(subsection);
           });
+      };
+
+      // Keep the first subsection stable on initial paint.
+      if (index === 0) {
+        activateSubsection();
+        return;
+      }
+
+      subsection.classList.add('project__subsection--deferred');
+      if (subsectionObserver) {
+        subsectionObserver.observe(subsection);
+      } else {
+        activateSubsection();
       }
     });
 });
