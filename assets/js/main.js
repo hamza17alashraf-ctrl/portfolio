@@ -29,13 +29,16 @@ function changeIcon() {
 }
 
 // header scroll animation
-window.addEventListener("scroll", () => {
+function updateHeaderScrollState() {
   if (window.scrollY > 40) {
     header.classList.add("header--scroll");
   } else {
     header.classList.remove("header--scroll");
   }
-});
+}
+
+window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
+updateHeaderScrollState();
 
 // Profile Picture Modal Logic
 const heroImg = document.querySelector('.hero__img');

@@ -190,10 +190,11 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   height: var(--height-header);
   z-index: var(--zindex-menu);
   transition: var(--transition);
+  will-change: transform;
 }
 
 .header--scroll {
-  height: var(--height-header--scroll);
+  transform: translateY(-1rem);
   box-shadow: var(--box-shadow);
 }
 
