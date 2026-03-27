@@ -37,31 +37,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// ScrollReveal animations
-const sr = ScrollReveal({
-  duration: 500,
-  distance: "80px",
-  delay: 50,
-  reset: false,
-});
-
-sr.reveal(".hero__content, .about__content");
-sr.reveal(".hero__img", { origin: "top" });
-
-sr.reveal(
-  ".hero__info-wrapper, .skills__title, .skills__content, .qualification__name, .qualification__item, .service__card, .project__card, .testimonial__wrapper, .footer__content",
-  {
-    delay: 300,
-    interval: 80,
-  }
-);
-
-sr.reveal(".qualification__footer-text, .contact__content", {
-  origin: "left",
-});
-
-sr.reveal(".qualification__footer .btn, .contact__btn", { origin: "right" });
-
 // Profile Picture Modal Logic
 const heroImg = document.querySelector('.hero__img');
 const pfpModal = document.getElementById('pfp-modal');
