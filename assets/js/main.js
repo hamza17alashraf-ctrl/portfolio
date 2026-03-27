@@ -481,55 +481,15 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     const projectSubsections = document.querySelectorAll('.project__subsection');
-    const subsectionObserver = 'IntersectionObserver' in window
-      ? new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-              return;
-            }
+    projectSubsections.forEach((subsection) => {
+      subsection.classList.remove('project__subsection--deferred');
+      subsection.classList.add('project__subsection--active');
 
-            const subsection = entry.target;
-            subsection.classList.remove('project__subsection--deferred');
-            subsection.classList.add('project__subsection--active');
-
-            attachAutoHoverVideos(subsection)
-              .finally(() => {
-                prepareProjectCardMedia(subsection);
-                initProjectShowMore(subsection);
-                initProjectVideoHover(subsection);
-              });
-
-            observer.unobserve(subsection);
-          });
-        }, {
-          rootMargin: '240px 0px',
-          threshold: 0.05,
-        })
-      : null;
-
-    projectSubsections.forEach((subsection, index) => {
-      const activateSubsection = () => {
-        subsection.classList.remove('project__subsection--deferred');
-        subsection.classList.add('project__subsection--active');
-        attachAutoHoverVideos(subsection)
-          .finally(() => {
-            prepareProjectCardMedia(subsection);
-            initProjectShowMore(subsection);
-            initProjectVideoHover(subsection);
-          });
-      };
-
-      // Keep the first subsection stable on initial paint.
-      if (index === 0) {
-        activateSubsection();
-        return;
-      }
-
-      subsection.classList.add('project__subsection--deferred');
-      if (subsectionObserver) {
-        subsectionObserver.observe(subsection);
-      } else {
-        activateSubsection();
-      }
+      attachAutoHoverVideos(subsection)
+        .finally(() => {
+          prepareProjectCardMedia(subsection);
+          initProjectShowMore(subsection);
+          initProjectVideoHover(subsection);
+        });
     });
 });
