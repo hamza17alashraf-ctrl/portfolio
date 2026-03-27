@@ -992,14 +992,58 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 /* Responsive - Mobile (1 column) */
 @media screen and (max-width: 640px) {
+  .service__wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .service__card {
+    max-width: 28rem;
+    padding: 2rem 1.4rem;
+  }
+
   .project__grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.6rem;
+  }
+
+  .project__sections {
+    gap: 2.8rem;
+    margin-top: 2.4rem;
+  }
+
+  .project__subsection-title {
+    font-size: 2rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .project__card {
+    width: 100%;
+    max-width: 34rem;
+    justify-self: center;
+    border-radius: 12px;
+  }
+
+  .project__image-wrapper {
+    aspect-ratio: 16 / 11;
   }
   
   .project__card-title {
     font-size: var(--fs-md);
+    margin: 0.9rem 1.2rem 0.65rem;
     min-height: auto;
+  }
+
+  .project__card-description {
+    font-size: 0.9rem;
+    margin: 0 1.2rem;
+    line-height: 1.5;
+  }
+
+  .project__card-link {
+    margin: 1.1rem 1.2rem 1.2rem;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.8rem;
   }
   
   .project__card-meta {
