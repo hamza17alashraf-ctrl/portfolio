@@ -1035,9 +1035,15 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   }
 
   .project__card-description {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     margin: 0 1.2rem;
     line-height: 1.5;
+    min-height: auto;
+    display: block;
+    line-clamp: unset;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: initial;
+    overflow: visible;
   }
 
   .project__card-link {
@@ -1048,6 +1054,15 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   
   .project__card-meta {
     padding-top: 1rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .project__card:active,
+  .project__card:focus-within,
+  .project__card.is-video-active {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.24);
   }
 }
 
