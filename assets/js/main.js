@@ -140,7 +140,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function ensureVideoLoaded(video) {
       if (video.dataset.mediaLoaded === 'true') {
-        return Promise.resolve();
+        return;
       }
 
       const sources = video.querySelectorAll('source[data-src]');
@@ -153,16 +153,6 @@ window.addEventListener('DOMContentLoaded', function() {
       }
 
       video.dataset.mediaLoaded = 'true';
-
-      if (video.readyState >= 2) {
-        return Promise.resolve();
-      }
-
-      return new Promise((resolve) => {
-        const onReady = () => resolve();
-        video.addEventListener('loadeddata', onReady, { once: true });
-        video.addEventListener('error', onReady, { once: true });
-      });
     }
 
     function prepareProjectCardMedia(scope = document) {
@@ -414,11 +404,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const startVideo = () => {
       stopOtherVideos(video);
-      ensureVideoLoaded(video).then(() => {
-        video.currentTime = 0;
-        card.classList.add('is-video-active');
-        video.play().catch(() => {});
-      });
+      ensureVideoLoaded(video);
+      video.currentTime = 0;
+      card.classList.add('is-video-active');
+      video.play().catch(() => {});
     };
 
     if (canHover) {
@@ -450,7 +439,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     let pointerHandled = false;
 
-    card.addEventListener('pointerup', (event) => {
+    card.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'mouse') {
         return;
       }

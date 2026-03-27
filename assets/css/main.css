@@ -837,9 +837,11 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   display: none;
 }
 
-.project__card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.24);
+@media (hover: hover) and (pointer: fine) {
+  .project__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.24);
+  }
 }
 
 .project__image-wrapper {
@@ -857,8 +859,10 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   border-radius: 0;
 }
 
-.project__card:hover .project__card-img {
-  transform: scale(1.1);
+@media (hover: hover) and (pointer: fine) {
+  .project__card:hover .project__card-img {
+    transform: scale(1.1);
+  }
 }
 
 .project__card-video[data-hover-play] {
@@ -872,11 +876,13 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   display: block;
 }
 
+.project__card.is-video-active .project__card-video[data-hover-play],
 .project__card:hover .project__card-video[data-hover-play],
 .project__card:focus-within .project__card-video[data-hover-play] {
   opacity: 1;
 }
 
+.project__card.is-video-active .project__card-thumbnail,
 .project__card:hover .project__card-thumbnail,
 .project__card:focus-within .project__card-thumbnail {
   opacity: 0;
