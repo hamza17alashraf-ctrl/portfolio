@@ -246,8 +246,15 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 @media screen and (max-width: 968px) {
   .nav__list {
     flex-direction: column;
+    justify-items: center;
     justify-content: center;
     align-items: center;
+
+  .project__card {
+    width: 100%;
+    max-width: 28rem;
+    justify-self: center;
+  }
     row-gap: 4rem;
   }
 
