@@ -1036,8 +1036,8 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   }
 
   .project__card {
-    width: min(100%, 34rem);
-    max-width: 34rem;
+    width: min(92vw, 28rem);
+    max-width: 28rem;
     margin-inline: auto;
     border-radius: 12px;
   }
@@ -1078,6 +1078,13 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .project__card {
+    width: min(94vw, 24rem);
+    max-width: 24rem;
   }
 }
 
