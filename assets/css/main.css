@@ -3,6 +3,8 @@
   ____________________*/
   --color-primary: #25ab75;
   --color-primary-dark: #208c61;
+  --color-accent: #c67915;
+  --color-accent-glow: rgba(198, 121, 21, 0.4);
   --color-bg-primary: #181c24;
   --color-bg-secondary: #23283b;
   --color-bg-footer: #151824;
@@ -44,6 +46,35 @@
 
 /* CSS Reset
 --------------------------------------------------------------*/
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.cursor-glow {
+  position: fixed;
+  top: -200px;
+  left: -200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(198, 121, 21, 0.15) 0%, rgba(198, 121, 21, 0) 60%);
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: screen;
+  will-change: transform, width, height, top, left, background;
+  border-radius: 50%;
+  transform: translate(var(--x, 50vw), var(--y, 50vh));
+  transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease, background 0.3s ease;
+}
+
+.cursor-glow.glow-active {
+  background: radial-gradient(circle, rgba(198, 121, 21, 0.25) 0%, rgba(198, 121, 21, 0) 65%);
+  width: 500px;
+  height: 500px;
+  top: -250px;
+  left: -250px;
+}
+
 *,
 *::before,
 *::after {
@@ -165,6 +196,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 .btn--primary:hover {
   background-color: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(37, 171, 117, 0.4);
 }
 
 .btn--secondary {
@@ -268,14 +300,14 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   transform: translateX(-50%) scaleX(0);
   width: 60%;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
   border-radius: 2px;
   transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .nav__link:hover {
   color: var(--color-white);
-  background-color: rgba(37, 171, 117, 0.08);
+  background-color: rgba(198, 121, 21, 0.08); /* orange tint */
 }
 
 .nav__link:hover::after {
@@ -283,7 +315,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 
 .nav__link.active-link {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .nav__link.active-link::after {
@@ -307,9 +339,9 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 
 .nav__toggle:hover {
-  color: var(--color-primary);
-  background: rgba(37, 171, 117, 0.1);
-  border-color: rgba(37, 171, 117, 0.3);
+  color: var(--color-accent);
+  background: rgba(198, 121, 21, 0.1);
+  border-color: rgba(198, 121, 21, 0.3);
 }
 
 @media screen and (max-width: 968px) {
@@ -370,7 +402,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   }
 
   .nav__link:hover {
-    background-color: rgba(37, 171, 117, 0.12);
+    background-color: rgba(198, 121, 21, 0.12); /* orange tint */
     transform: translateX(6px);
   }
 
@@ -480,6 +512,14 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   height: 410px;
   border: 2.5px solid #25ab75;
   opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.hero__img-wrapper:hover::before {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 25px rgba(198, 121, 21, 0.5);
+  opacity: 0.8;
+  transform: translate(-50%, -50%) scale(1.02);
 }
 
 .hero__img-wrapper::after {
@@ -501,7 +541,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 .hero__img:hover {
   transform: scale(1.08);
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45);
+  box-shadow: 0 8px 32px 0 rgba(198, 121, 21, 0.45);
 }
 
 @media screen and (max-width: 968px) {
@@ -743,17 +783,20 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 .software-icon-item:hover {
   transform: translateX(6px);
-  border-bottom-color: rgba(37, 171, 117, 0.65);
+  border-bottom-color: var(--color-accent);
+  background: rgba(198, 121, 21, 0.04);
 }
 
 .software-icon-item:hover .software-icon-media {
   transform: scale(1.08);
-  filter: drop-shadow(0 10px 18px rgba(37, 171, 117, 0.32));
+  filter: drop-shadow(0 10px 18px rgba(198, 121, 21, 0.32));
 }
 
 .software-icon-item:hover::before {
   color: var(--color-white);
-  border-color: rgba(37, 171, 117, 0.9);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: 0 0 10px rgba(198, 121, 21, 0.4);
 }
 
 .software-icon-item:hover > span:last-child {
@@ -891,22 +934,31 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 
 .service__card:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
 .service__card:hover {
-  background-color: var(--color-primary);
+  transform: translateY(-6px);
+  border-bottom: 3px solid var(--color-accent);
+  box-shadow: 0 12px 24px rgba(198, 121, 21, 0.15);
 }
 
 .service__card:hover .service__link {
-  color: var(--color-white);
+  color: var(--color-accent);
 }
 
 .service__icon {
   font-size: 2.2rem;
   color: var(--color-white);
   margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.service__card:hover .service__icon {
+  color: var(--color-accent);
+  transform: scale(1.15) translateY(-2px);
+  filter: drop-shadow(0 4px 8px rgba(198, 121, 21, 0.4));
 }
 
 .service__title {
@@ -982,7 +1034,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 @media (hover: hover) and (pointer: fine) {
   .project__card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 12px 48px rgba(198, 121, 21, 0.25);
   }
 }
 
@@ -1101,7 +1153,9 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 
 .project__show-more:hover {
-  background: var(--color-primary);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 16px rgba(198, 121, 21, 0.3);
   transform: translateY(-2px);
 }
 
@@ -1375,7 +1429,8 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(198, 121, 21, 0.2);
   outline: none;
 }
 .contact-form button[type="submit"] {
@@ -1449,7 +1504,8 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 
 .footer__social-link:hover,
 .footer__contact:hover {
-  color: var(--color-primary);
+  color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(198, 121, 21, 0.4);
 }
 
 .footer__copyright {
@@ -1472,7 +1528,7 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
 }
 
 /* Breakpoints
@@ -1618,5 +1674,6 @@ main, .header, .footer, .pfp-modal, .skills-section, .section {
   transition: color 0.2s;
 }
 .pfp-modal__close:hover {
-  color: #25ab75;
+  color: var(--color-accent);
+  text-shadow: 0 0 10px rgba(198, 121, 21, 0.5);
 }

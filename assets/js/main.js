@@ -496,3 +496,53 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ==========================================
+// Custom Orange Cursor Glow Effect
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if device supports pointer fine (don't show glow on mobile tap-touch)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const cursorGlow = document.createElement('div');
+    cursorGlow.classList.add('cursor-glow');
+    document.body.appendChild(cursorGlow);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX = mouseX;
+    let glowY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateGlow() {
+      glowX += (mouseX - glowX) * 0.12;
+      glowY += (mouseY - glowY) * 0.12;
+      
+      cursorGlow.style.setProperty('--x', `${glowX}px`);
+      cursorGlow.style.setProperty('--y', `${glowY}px`);
+      
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    const addGlowTriggers = () => {
+        const interactiveElements = document.querySelectorAll('a, button, .project__card, .service__card, .hero__img-wrapper, .skills__content');
+        interactiveElements.forEach(el => {
+          if (!el.dataset.glowReady) {
+              el.addEventListener('mouseenter', () => cursorGlow.classList.add('glow-active'));
+              el.addEventListener('mouseleave', () => cursorGlow.classList.remove('glow-active'));
+              el.dataset.glowReady = 'true';
+          }
+        });
+    };
+    
+    addGlowTriggers();
+    
+    // MutationObserver to attach glow events to dynamically added elements (like "Show More" buttons)
+    const observer = new MutationObserver(addGlowTriggers);
+    observer.observe(document.body, { childList: true, subtree: true });
+});
