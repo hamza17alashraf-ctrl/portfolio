@@ -498,7 +498,7 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 // ==========================================
-// Custom Orange Cursor Glow Effect
+// Custom Green Cursor Glow Effect
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     // Check if device supports pointer fine (don't show glow on mobile tap-touch)
@@ -546,3 +546,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new MutationObserver(addGlowTriggers);
     observer.observe(document.body, { childList: true, subtree: true });
 });
+
