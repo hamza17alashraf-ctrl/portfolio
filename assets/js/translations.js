@@ -257,3 +257,136 @@ Object.assign(translations, {
     "My": { fr: "Mes", ar: "البرامج" },
     "Software": { fr: "Logiciels", ar: "المتخصصة" }
 });
+
+
+
+Object.assign(translations, {
+    "Qualification": {
+        "fr": "Qualification",
+        "ar": "المؤهلات"
+    },
+    "Experience & Education": {
+        "fr": "Expérience et Éducation",
+        "ar": "الخبرة والتعليم"
+    },
+    "Professional Experience": {
+        "fr": "Expérience Professionnelle",
+        "ar": "الخبرة المهنية"
+    },
+    "Web Developer at Oracle": {
+        "fr": "Développeur Web chez Oracle",
+        "ar": "مطور ويب في أوراكل"
+    },
+    "It provides a convenient way for potential clients to view your work while also allowing you to expand on your skills and services.": {
+        "fr": "Cela offre un moyen pratique pour les clients potentiels de voir votre travail...",
+        "ar": "يوفر طريقة مريحة للعملاء المحتملين لعرض عملك مع السماح لك أيضاً بتوسيع مهاراتك وخدماتها."
+    },
+    "Jan 2022 - Present": {
+        "fr": "Jan 2022 - Présent",
+        "ar": "جانفي 2022 - الحاضر"
+    },
+    "Frontend Lead at Google": {
+        "fr": "Frontend Lead chez Google",
+        "ar": "قائد واجهة أمامية في جوجل"
+    },
+    "2020 - 2022": {
+        "fr": "2020 - 2022",
+        "ar": "2020 - 2022"
+    },
+    "UI/UX Designer at Facebook": {
+        "fr": "Designer UI/UX chez Facebook",
+        "ar": "مصمم واجهة مستخدم في فيسبوك"
+    },
+    "2018 - 2020": {
+        "fr": "2018 - 2020",
+        "ar": "2018 - 2020"
+    },
+    "Education": {
+        "fr": "Éducation",
+        "ar": "التعليم"
+    },
+    "UI/UX Designer": {
+        "fr": "Designer UI/UX",
+        "ar": "مصمم واجهات المستخدم"
+    },
+    "2018 - 2019": {
+        "fr": "2018 - 2019",
+        "ar": "2018 - 2019"
+    },
+    "Master In Web Development": {
+        "fr": "Master en Développement Web",
+        "ar": "ماجستير في تطوير الويب"
+    },
+    "2015 - 2017": {
+        "fr": "2015 - 2017",
+        "ar": "2015 - 2017"
+    },
+    "Software Engineer": {
+        "fr": "Ingénieur Logiciel",
+        "ar": "مهندس برمجيات"
+    },
+    "2011 - 2015": {
+        "fr": "2011 - 2015",
+        "ar": "2011 - 2015"
+    },
+    "See my full resume": {
+        "fr": "Voir mon CV complet",
+        "ar": "عرض سيرتي الذاتية كاملة"
+    },
+    "Resume": {
+        "fr": "CV",
+        "ar": "سيرة ذاتية"
+    },
+    "Let's Work Together": {
+        "fr": "Travaillons Ensemble",
+        "ar": "دعونا نعمل معًا"
+    },
+    "Email": {
+        "fr": "E-mail",
+        "ar": "البريد الإلكتروني"
+    },
+    "Location": {
+        "fr": "Emplacement",
+        "ar": "الموقع"
+    },
+    "El Harrach, Algiers": {
+        "fr": "El Harrach, Alger",
+        "ar": "الحراش، الجزائر"
+    },
+    "EPAU - 3rd Year Student": {
+        "fr": "EPAU - Étudiant en 3ème année",
+        "ar": "المدرسة الوطنية متعددة التقنيات للهندسة المعمارية والعمران - طالب سنة ثالثة"
+    },
+    "I'm passionate about creating innovative architectural solutions and transformative designs. Whether you have a project in mind, need design consultation, or want to collaborate, I'd love to hear from you. Let's bring your architectural vision to life!": {
+        "fr": "Je suis passionné par la création de solutions architecturales innovantes et de designs transformateurs. Que vous ayez un projet en tête, que vous ayez besoin de conseils en design ou que vous souhaitiez collaborer, j'aimerais beaucoup avoir de vos nouvelles. Donnons vie à votre vision architecturale !",
+        "ar": "أنا شغوف بإنشاء حلول معمارية مبتكرة وتصميمات تحويلية. سواء كان لديك مشروع في ذهنك، أو تحتاج إلى استشارة في التصميم، أو ترغب في التعاون، يسعدني أن أسمع منك. دعنا نحول رؤيتك المعمارية إلى حقيقة!"
+    },
+    "Send": {
+        "fr": "Envoyer",
+        "ar": "إرسال"
+    },
+    "Mail has been sent successfully!": {
+        "fr": "Le courrier a été envoyé avec succès!",
+        "ar": "تم إرسال البريد بنجاح!"
+    },
+    "Email Me": {
+        "fr": "Envoyez-moi un email",
+        "ar": "راسلني عبر البريد الإلكتروني"
+    },
+    "Workspaces &amp; Offices": {
+        "fr": "Espaces de travail et bureaux",
+        "ar": "مساحات العمل والمكاتب"
+    },
+    "Social &amp; Research Projects": {
+        "fr": "Projets sociaux et de recherche",
+        "ar": "المشاريع الاجتماعية والبحثية"
+    },
+    "Les analyses urbain et architectural": {
+        "fr": "Les analyses urbaines et architecturales",
+        "ar": "التحليلات الحضرية والمعمارية"
+    },
+    "Carré Vert Urban Revitalization": {
+        "fr": "Revitalisation Urbaine Carré Vert",
+        "ar": "مربع أخضر للتنشيط الحضري"
+    }
+});

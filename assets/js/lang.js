@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         select.addEventListener('change', (e) => {
             currentLang = e.target.value;
             updateTexts();
+            
+            // Close nav menu on mobile when language is changed
+            const navMenu = document.getElementById('nav-menu');
+            const navToggle = document.getElementById('nav-toggle');
+            if (navMenu && navMenu.classList.contains('nav__menu--open')) {
+                navMenu.classList.remove('nav__menu--open');
+                if (navToggle && navToggle.classList.contains('fa-times')) {
+                    navToggle.classList.replace('fa-times', 'fa-bars');
+                }
+            }
         });
     }
     // initialize
