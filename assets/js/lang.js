@@ -16,9 +16,13 @@ function updateTexts() {
         document.body.dir = 'ltr';
     }
 
-    const select = document.getElementById('lang-switcher');
-    if (select) {
-        select.value = currentLang;
+    const selectDesktop = document.getElementById('lang-switcher-desktop');
+    const selectMobile = document.getElementById('lang-switcher-mobile');
+    if (selectDesktop) {
+        selectDesktop.value = currentLang;
+    }
+    if (selectMobile) {
+        selectMobile.value = currentLang;
     }
 
     // Traverse DOM to find Text Nodes and translatable attributes
@@ -73,23 +77,31 @@ function updateTexts() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const select = document.getElementById('lang-switcher');
-    if (select) {
-        select.addEventListener('change', (e) => {
-            currentLang = e.target.value;
-            updateTexts();
-            
-            // Close nav menu on mobile when language is changed
-            const navMenu = document.getElementById('nav-menu');
-            const navToggle = document.getElementById('nav-toggle');
-            if (navMenu && navMenu.classList.contains('nav__menu--open')) {
-                navMenu.classList.remove('nav__menu--open');
-                if (navToggle && navToggle.classList.contains('fa-times')) {
-                    navToggle.classList.replace('fa-times', 'fa-bars');
-                }
+    const selectDesktop = document.getElementById('lang-switcher-desktop');
+    const selectMobile = document.getElementById('lang-switcher-mobile');
+
+    function handleLanguageChange(e) {
+        currentLang = e.target.value;
+        updateTexts();
+        
+        // Close nav menu on mobile when language is changed
+        const navMenu = document.getElementById('nav-menu');
+        const navToggle = document.getElementById('nav-toggle');
+        if (navMenu && navMenu.classList.contains('nav__menu--open')) {
+            navMenu.classList.remove('nav__menu--open');
+            if (navToggle && navToggle.classList.contains('fa-times')) {
+                navToggle.classList.replace('fa-times', 'fa-bars');
             }
-        });
+        }
     }
+
+    if (selectDesktop) {
+        selectDesktop.addEventListener('change', handleLanguageChange);
+    }
+    if (selectMobile) {
+        selectMobile.addEventListener('change', handleLanguageChange);
+    }
+    
     // initialize
     updateTexts();
 });
